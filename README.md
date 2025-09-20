@@ -1,6 +1,14 @@
 # Proxmox Packer Cloudinit Automation
 
-This repository contains Packer templates for automating the creation of virtual machine templates on Proxmox Virtual Environment (PVE). The project focuses on building Ubuntu Server 24.04 LTS (Noble) templates with Cloud-Init integration for infrastructure automation. you can find more details in the [README1.md](README1.md) file.
+This repository contains Packer templates for automating the creation of virtual machine templates on Proxmox Virtual Environment (PVE). The project focuses on building Ubuntu Server 24.04 LTS (Noble) templates with Cloud-Init integration for infrastructure automation. You can find more details in the [Cloud-Init + Packer: Complete Infrastructure Automation Guide (GitHub Wiki)](https://github.com/Benmeddour/proxmox-packer-cloudinit-automation/wiki/Cloud%E2%80%90Init---Packer:-Complete-Infrastructure-Automation-Guide).
+
+This guide covers:
+- The problem with manual VM/instance setup  
+- How **Cloud-Init** simplifies initialization (networking, users, SSH keys, packages)  
+- How **Packer** automates Proxmox template creation  
+- Combining both for **end-to-end automation**  
+- Practical examples, troubleshooting tips, and references (videos & blogs)
+
 
 ## 🎯 The Problem We Solve
 
