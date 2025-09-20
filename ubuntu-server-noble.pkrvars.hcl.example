@@ -1,0 +1,33 @@
+# Example variables file for customizing builds
+# Copy this to ubuntu-server-noble.pkrvars.hcl and customize as needed
+
+# VM Configuration
+vm_id = "103"
+vm_name = "ubuntu-server-custom"
+proxmox_node = "your-node-name"
+
+# Hardware Configuration
+vm_cores = "4"
+vm_sockets = "1"
+vm_memory = "8192"
+disk_size = "64G"
+
+# Network Configuration
+network_bridge = "vmbr1"
+http_bind_address = "192.168.1.100"
+http_port = "8803"
+
+# SSH Configuration
+ssh_username = "ubuntu"
+ssh_password = "ubuntu"
+ssh_timeout = "45m"
+
+# Storage Configuration
+storage_pool = "your-storage-pool"
+iso_storage_pool = "your-iso-pool"
+
+# ISO Configuration (for download method)
+# iso_checksum = "sha256:your-iso-checksum"
+
+# Build Configuration
+boot_wait = "10s"

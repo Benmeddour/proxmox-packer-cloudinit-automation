@@ -1,0 +1,81 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: de
+  ssh:
+    install-server: true
+    allow-pw: true
+    disable_root: true
+    ssh_quiet_keygen: true
+    allow_public_ssh_keys: true
+  packages:
+    - qemu-guest-agent
+    - sudo
+    - bash-completion
+    - net-tools
+    - command-not-found
+    - curl
+    - wget
+    - vim
+    - htop
+    - tree
+    - git
+  storage:
+    layout:
+      name: direct
+    swap:
+      size: 0
+  updates: none
+  timezone: Europe/London
+  # User configuration moved to user-data section below
+
+user-data:
+  package_upgrade: false
+  timezone: Europe/London
+  users:
+    - name: admin
+      groups: [adm, sudo]
+      lock-passwd: false
+      sudo: ALL=(ALL) NOPASSWD:ALL
+      shell: /bin/bash
+      # Password hash for "admin" - CHANGE THIS IN PRODUCTION
+      passwd: $6$kkdqkbHUxkiLRYgq$iFyXP.drkjzPx8SQ3QnBoEbLIfX2QBNpTJgkKYD68OPMo5K.4NT8EM2iQqzEUfDF77zao5JIcv4KfRe523q.S/
+      # SSH key authentication (recommended for production)
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhIrdsW2SKIwnoCGTwSbOCckIL5BxDD6VLa/ShPAVTCpL6ju9C6LQYdqbW7GGZ/Ho4Bawp5wB+1bEOVt3Cm76orLD8RYHgIaXhD/lcFqeI3r19PWTbw5mwGuGp5OplGf67tw7QRsiIZdvXiwcxCCasVXFuQVb4oBKKgp8dzKAsTueZzIyS3VesaZ4i6fB3Va5N1X50i4/QDj2Mnw3L75nz7MKax4b1TndBWRq5QjTewAPXheUUsFtlIEIISfGSyU4nHYfBA/SNcfCOcngV5SwjnmB7gS+M+s7UV3r6C0UIaNfZ/sqjuG0vBYJmQ5IvSL/9Ob6v4FY+Gnd+oKgLe45Sspv3Xl0a5bVD2kIq6+8SOu01VbDwzZMGx5g6ISkbxC7lC6ltUvpO4gMF4GTkaaOazoG8i6XdEpQHhZJJ0RILo1LO0CCuhr6m5TBech41I2h3hb40S98y50rzrCQWBrsBVq39eYre1W/P7LJP8cM370867825ulKnpf5qLmUJDexSMpKxRxri1rgoIWdUgIQGaFLRnJEJVhe7hx4wEIq8DDccSVQ/9elkK/aB61jbGmS6MubWc/GqyOaGCK4iGSp7WfVuj7rRNlCw31n1HELF4cGwtQggs8HfzFyGwSfq6fkfltP4j6r2nfMK36zICmgYKSBhZtPqFKM2Ei0Hpqa4aQ== msi@DESKTOP-I17O34L
+  
+  # System configuration
+  write_files:
+    - path: /etc/ssh/sshd_config.d/99-packer.conf
+      content: |
+        PermitRootLogin no
+        PasswordAuthentication yes
+        PubkeyAuthentication yes
+        ChallengeResponseAuthentication no
+      permissions: '0644'
+    
+    - path: /etc/motd
+      content: |
+        
+        ╔══════════════════════════════════════════════════════════════╗
+        ║                                                              ║
+        ║           Ubuntu Server 24.04 LTS (Noble)                   ║
+        ║           Built with Packer + Cloud-Init                    ║
+        ║                                                              ║
+        ║           Template created: $(date)                         ║
+        ║                                                              ║
+        ╚══════════════════════════════════════════════════════════════╝
+        
+      permissions: '0644'
+  
+  # Run commands on first boot
+  runcmd:
+    - systemctl enable qemu-guest-agent
+    - systemctl start qemu-guest-agent
+    - systemctl enable ssh
+    - apt-get update
+    - apt-get autoremove -y
+    - apt-get autoclean -y
+

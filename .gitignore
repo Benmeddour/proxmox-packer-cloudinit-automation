@@ -1,0 +1,74 @@
+# Packer specific
+packer_cache/
+*.log
+crash.log
+*.pkrvars.hcl
+build/
+output/
+
+# Credentials and sensitive files
+credentials.pkr.hcl
+**/credentials.pkr.hcl
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.local
+.secrets
+**/secrets.*
+auth.json
+config.json
+
+# HashiCorp specific
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.auto.tfvars
+
+# ISO files (too large for git)
+*.iso
+*.img
+
+# SSH Keys
+id_rsa*
+id_ed25519*
+*.pub
+!example.pub
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Windows
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.fuse_hidden*
+.nfs*
+
+# Logs and monitoring
+*.log.*
+logs/
+monitoring/
+
+# Node.js (if using any JS tools)
+node_modules/
+npm-debug.log*
